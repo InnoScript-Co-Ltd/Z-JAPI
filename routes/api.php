@@ -34,6 +34,7 @@ Route::prefix('v1')->group(function ($router) {
 
             Route::prefix('activities')->group(function () {
                 Route::get('/', [ActivityController::class, 'index']);
+                Route::post('/delete/multiple', [ActivityController::class, 'destryMultiple']);
             });
 
             Route::prefix('user')->group(function () {

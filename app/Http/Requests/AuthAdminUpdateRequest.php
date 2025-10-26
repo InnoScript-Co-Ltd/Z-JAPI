@@ -30,6 +30,7 @@ class AuthAdminUpdateRequest extends FormRequest
         return [
             'first_name' => 'nullable | string',
             'last_name' => 'nullable | string',
+            'phone' => "nullable | string | unique:admins,phone,$adminId",
             'email' => "nullable | email | unique:admins,email,$adminId",
             'password' => 'nullable | min:6 | max:18',
             'status' => "nullable | in:$userStatus",

@@ -17,11 +17,13 @@ class AdminController extends Controller
 
         try {
             $admin = Admin::create($payload->toArray());
-            $this->adminLog('CREATE_ADMIN_ACCOUNT', $admin);
+            $this->adminLog('ADMIN_ACCOUNT_CREATED', $admin);
             DB::commit();
 
             return $this->success($admin, 'admin is created successfully');
         } catch (Exception $e) {
+            DB::rollBack();
+
             return $this->internalServerError();
         }
     }
@@ -77,10 +79,13 @@ class AdminController extends Controller
         try {
             $admin = Admin::findOrFail($id);
             $admin->update($payload->toArray());
+            $this->adminLog('ADMIN_ACCOUNT_UPDATED', $payload->toArray());
             DB::commit();
 
             return $this->success('Admin is updated successfully', $payload);
         } catch (Exception $e) {
+            DB::rollBack();
+
             return $this->internalServerError();
         }
     }
@@ -92,12 +97,14 @@ class AdminController extends Controller
         try {
             $admin = Admin::findOrFail($id);
             $admin->update(['status' => 'ACTIVE']);
-            $this->adminLog('APPROVE_ADMIN_ACCOUNT', $admin);
+            $this->adminLog('ADMIN_ACCOUNT_APPROVED', $admin);
 
             DB::commit();
 
             return $this->success('Admin is approved successfully', $admin);
         } catch (Exception $e) {
+            DB::rollBack();
+
             return $this->internalServerError();
         }
     }
@@ -110,12 +117,14 @@ class AdminController extends Controller
             $admin = Admin::onlyTrashed()->findOrfail($id);
             $admin->restore();
             $admin->update(['status' => 'ACTIVE']);
-            $this->adminLog('RESTORE_ADMIN_ACCOUNT', $admin);
+            $this->adminLog('ADMIN_ACCOUNT_RESTORED', $admin);
 
             DB::commit();
 
             return $this->success('Admin is restored successfully', $admin);
         } catch (Exception $e) {
+            DB::rollBack();
+
             return $this->internalServerError();
         }
     }
@@ -128,7 +137,7 @@ class AdminController extends Controller
             $admin = Admin::findOrfail($id);
             $admin->update(['status' => 'DELETED']);
             $admin->delete($id);
-            $this->adminLog('DELETE_ADMIN_ACCOUNT', $admin);
+            $this->adminLog('ADMIN_ACCOUNT_DELETED', $admin);
 
             DB::commit();
 

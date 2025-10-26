@@ -97,7 +97,7 @@ class QueryBuilderHelper
             $startDate = Carbon::createFromFormat('Y-m-d', $start_date)->startOfDay();
             $endDate = Carbon::createFromFormat('Y-m-d', $end_date)->endOfDay();
 
-            return $builder->whereBetween('created_at', [$startDate, $endDate]);
+            return $builder->whereBetween('created_at', [$startDate.' 00:00:00', $endDate.' 23:59:59']);
         }
 
         return $builder;

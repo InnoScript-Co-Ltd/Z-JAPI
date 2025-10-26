@@ -83,11 +83,13 @@ class AdminAuthController extends Controller
         try {
             $admin = auth::guard('admin')->user();
             $admin->update($payload->toArray());
-
+            $this->adminLog('UPDATE_ADMIN_PROFILE', $admin);
             DB::commit();
 
             return $this->success('Logged in admin is updated successfully', $payload);
         } catch (Exception $e) {
+            DB::rollBack();
+
             return $this->internalServerError();
         }
     }
