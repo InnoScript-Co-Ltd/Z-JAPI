@@ -3,8 +3,7 @@
 use App\Http\Controllers\ActivityController;
 use App\Http\Controllers\AdminAuthController;
 use App\Http\Controllers\AdminController;
-use App\Http\Controllers\UserAuthController;
-use App\Http\Controllers\UserController;
+use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\VisaServiceController;
 use Illuminate\Support\Facades\Route;
 
@@ -38,6 +37,15 @@ Route::prefix('v1')->group(function ($router) {
                 Route::post('/', [VisaServiceController::class, 'store']);
                 Route::get('/{id}', [VisaServiceController::class, 'show']);
                 Route::post('/{id}', [VisaServiceController::class, 'update']);
+            });
+
+            Route::prefix('customer')->group(function () {
+                Route::get('/', [CustomerController::class, 'index']);
+                Route::post('/', [CustomerController::class, 'store']);
+                Route::get('/{id}', [CustomerController::class, 'show']);
+                Route::post('/{id}', [CustomerController::class, 'update']);
+                Route::delete('/{id}', [CustomerController::class, 'destroy']);
+                Route::post('/restore/{id}', [CustomerController::class, 'restore']);
             });
 
             Route::prefix('activities')->group(function () {
