@@ -45,6 +45,12 @@ class VisaServiceController extends Controller
     {
         $payload = collect($request->validated());
 
+        if (isset($payload['passport_image'])) {
+            $passportImagePath = $payload['passport_image']->store('images', 'public');
+            $passportImage = explode('/', $passportImagePath)[1];
+            $payload['passport_image'] = $passportImage;
+        }
+
         DB::beginTransaction();
 
         try {

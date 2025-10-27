@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use App\Models\VisaService;
 use Illuminate\Foundation\Http\FormRequest;
 
 class VisaServiceUpdateRequest extends FormRequest
@@ -25,8 +26,9 @@ class VisaServiceUpdateRequest extends FormRequest
 
         return [
             'name' => 'nullable | string',
-            'passport' => "nullable | string | unique:visa_services:passport,$visaServiceId",
-            'passport_image' => 'nullable | file',
+            'passport' => "nullable | string | unique:visa_services,passport,$visaServiceId",
+            'passport_image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'service_type' => 'nullable | string',
             'visa_type' => 'nullable | string',
             'visa_entry_date' => 'nullable | date',
             'visa_expiry_date' => 'nullable | date',
