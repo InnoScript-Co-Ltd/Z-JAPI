@@ -92,12 +92,13 @@ class QueryBuilderHelper
         $requestQuery = app('request')->query();
         $start_date = isset($requestQuery['start_date']) ? $requestQuery['start_date'] : null;
         $end_date = isset($requestQuery['end_date']) ? $requestQuery['end_date'] : null;
+        $date_filter = isset($requestQuery['date_filter']) ? $requestQuery['date_filter'] : 'created_at';
 
         if ($start_date && $end_date) {
             $startDate = Carbon::createFromFormat('Y-m-d', $start_date)->startOfDay();
             $endDate = Carbon::createFromFormat('Y-m-d', $end_date)->endOfDay();
 
-            return $builder->whereBetween('created_at', [$startDate.' 00:00:00', $endDate.' 23:59:59']);
+            return $builder->whereBetween($date_filter, [$startDate.' 00:00:00', $endDate.' 23:59:59']);
         }
 
         return $builder;
