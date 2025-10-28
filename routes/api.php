@@ -4,6 +4,7 @@ use App\Http\Controllers\ActivityController;
 use App\Http\Controllers\AdminAuthController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\CustomerController;
+use App\Http\Controllers\ServiceController;
 use App\Http\Controllers\VisaServiceController;
 use Illuminate\Support\Facades\Route;
 
@@ -30,6 +31,14 @@ Route::prefix('v1')->group(function ($router) {
             Route::prefix('auth')->group(function () {
                 Route::get('/', [AdminAuthController::class, 'show']);
                 Route::put('/', [AdminAuthController::class, 'update']);
+            });
+
+            Route::prefix('services')->group(function () {
+                Route::get('/', [ServiceController::class, 'index']);
+                Route::post('/', [ServiceController::class, 'store']);
+                Route::get('/{id}', [ServiceController::class, 'show']);
+                Route::post('/{id}', [ServiceController::class, 'update']);
+                Route::post('/restore/{id}', [ServiceController::class, 'restore']);
             });
 
             Route::prefix('visa-services')->group(function () {
