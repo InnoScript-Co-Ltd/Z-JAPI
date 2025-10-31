@@ -28,6 +28,48 @@ class CustomerController extends Controller
     {
         $payload = collect($request->validated());
 
+        if (isset($payload['nrc_front'])) {
+            $nrcFrontPath = $payload['nrc_front']->store('images', 'public');
+            $nrcFrontImage = explode('/', $nrcFrontPath)[1];
+            $payload['nrc_front'] = $nrcFrontImage;
+        }
+
+        if (isset($payload['nrc_back'])) {
+            $nrcBackPath = $payload['nrc_back']->store('images', 'public');
+            $nrcBackImage = explode('/', $nrcBackPath)[1];
+            $payload['nrc_back'] = $nrcBackImage;
+        }
+
+        if (isset($payload['photo'])) {
+            $photoPath = $payload['photo']->store('images', 'public');
+            $photoImage = explode('/', $photoPath)[1];
+            $payload['photo'] = $photoImage;
+        }
+
+        if (isset($payload['passport_photo'])) {
+            $passportImagePath = $payload['passport_photo']->store('images', 'public');
+            $passportImageImage = explode('/', $passportImagePath)[1];
+            $payload['passport_photo'] = $passportImageImage;
+        }
+
+        if (isset($payload['social_link_qrcode'])) {
+            $socialLinkPath = $payload['social_link_qrcode']->store('images', 'public');
+            $socialLinkImage = explode('/', $socialLinkPath)[1];
+            $payload['social_link_qrcode'] = $socialLinkImage;
+        }
+
+        if (isset($payload['employer_photo'])) {
+            $employeePhotoPath = $payload['employer_photo']->store('images', 'public');
+            $employeePhotoImage = explode('/', $employeePhotoPath)[1];
+            $payload['employer_photo'] = $employeePhotoImage;
+        }
+
+        if (isset($payload['employer_household_photo'])) {
+            $employerHouseholdPhotoPath = $payload['employer_household_photo']->store('images', 'public');
+            $employerHouseholdPhoto = explode('/', $employerHouseholdPhotoPath)[1];
+            $payload['employer_household_photo'] = $employerHouseholdPhoto;
+        }
+
         DB::beginTransaction();
 
         try {
@@ -54,14 +96,57 @@ class CustomerController extends Controller
         }
     }
 
-    public function update($id, CustomerUpdateRequest $request)
+    public function update(CustomerUpdateRequest $request, $id)
     {
         $payload = collect($request->validated());
+
+        if (isset($payload['nrc_front'])) {
+            $nrcFrontPath = $payload['nrc_front']->store('images', 'public');
+            $nrcFrontImage = explode('/', $nrcFrontPath)[1];
+            $payload['nrc_front'] = $nrcFrontImage;
+        }
+
+        if (isset($payload['nrc_back'])) {
+            $nrcBackPath = $payload['nrc_back']->store('images', 'public');
+            $nrcBackImage = explode('/', $nrcBackPath)[1];
+            $payload['nrc_back'] = $nrcBackImage;
+        }
+
+        if (isset($payload['photo'])) {
+            $photoPath = $payload['photo']->store('images', 'public');
+            $photoImage = explode('/', $photoPath)[1];
+            $payload['photo'] = $photoImage;
+        }
+
+        if (isset($payload['passport_photo'])) {
+            $passportImagePath = $payload['passport_photo']->store('images', 'public');
+            $passportImageImage = explode('/', $passportImagePath)[1];
+            $payload['passport_photo'] = $passportImageImage;
+        }
+
+        if (isset($payload['social_link_qrcode'])) {
+            $socialLinkPath = $payload['social_link_qrcode']->store('images', 'public');
+            $socialLinkImage = explode('/', $socialLinkPath)[1];
+            $payload['social_link_qrcode'] = $socialLinkImage;
+        }
+
+        if (isset($payload['employer_photo'])) {
+            $employeePhotoPath = $payload['employer_photo']->store('images', 'public');
+            $employeePhotoImage = explode('/', $employeePhotoPath)[1];
+            $payload['employer_photo'] = $employeePhotoImage;
+        }
+
+        if (isset($payload['employer_household_photo'])) {
+            $employerHouseholdPhotoPath = $payload['employer_household_photo']->store('images', 'public');
+            $employerHouseholdPhoto = explode('/', $employerHouseholdPhotoPath)[1];
+            $payload['employer_household_photo'] = $employerHouseholdPhoto;
+        }
 
         DB::beginTransaction();
 
         try {
             $customer = Customer::findOrFail($id);
+            $customer->update($payload->toArray());
             $this->adminLog('CUSTOMER_UPDATE', $payload);
             DB::commit();
 

@@ -9,17 +9,6 @@ use App\Http\Controllers\VisaServiceController;
 use Illuminate\Support\Facades\Route;
 
 Route::prefix('v1')->group(function ($router) {
-    // Route::prefix('auth')->group(function () {
-    //     Route::post('login', [UserAuthController::class, 'login']);
-    // });
-
-    // Route::middleware('auth:api')->group(function () {
-
-    //     Route::prefix('auth')->group(function () {
-    //         Route::get('/', [UserAuthController::class, 'show']);
-    //         Route::put('/', [UserAuthController::class, 'update']);
-    //     });
-    // });
 
     Route::prefix('admin')->group(function () {
         Route::prefix('auth')->group(function () {
@@ -37,7 +26,7 @@ Route::prefix('v1')->group(function ($router) {
                 Route::get('/', [ServiceController::class, 'index']);
                 Route::post('/', [ServiceController::class, 'store']);
                 Route::get('/{id}', [ServiceController::class, 'show']);
-                Route::post('/{id}', [ServiceController::class, 'update']);
+                Route::put('/{id}', [ServiceController::class, 'update']);
                 Route::post('/restore/{id}', [ServiceController::class, 'restore']);
             });
 

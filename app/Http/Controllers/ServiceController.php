@@ -31,6 +31,7 @@ class ServiceController extends Controller
         DB::beginTransaction();
 
         try {
+            $payload['status'] = 'ACTIVE';
             $service = Service::create($payload->toArray());
             $this->adminLog('SERVICE_CREATED', $payload);
             DB::commit();
@@ -62,6 +63,7 @@ class ServiceController extends Controller
 
         try {
             $service = Service::findOrFail($id);
+            $service->update($payload->toArray());
             $this->adminLog('SERVICE_UPDATE', $payload);
             DB::commit();
 

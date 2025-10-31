@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('services', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
+            $table->string('service_type')->unique();
             $table->string('description')->nullable()->default(null);
             $table->decimal('fees', 12, 2);
             $table->string('status');

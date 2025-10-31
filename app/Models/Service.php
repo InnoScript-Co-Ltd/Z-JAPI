@@ -12,6 +12,6 @@ class Service extends Model
     use HasFactory, Notifiable, SoftDeletes;
 
     protected $fillable = [
-        'name', 'description', 'fees', 'status',
+        'service_type', 'description', 'fees', 'status',
     ];
 }
