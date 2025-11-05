@@ -3,6 +3,7 @@
 use App\Http\Controllers\ActivityController;
 use App\Http\Controllers\AdminAuthController;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\ServiceController;
 use App\Http\Controllers\VisaServiceController;
@@ -20,6 +21,14 @@ Route::prefix('v1')->group(function ($router) {
             Route::prefix('auth')->group(function () {
                 Route::get('/', [AdminAuthController::class, 'show']);
                 Route::put('/', [AdminAuthController::class, 'update']);
+            });
+
+            Route::prefix('categories')->group(function () {
+                Route::get('/', [CategoryController::class, 'index']);
+                Route::post('/', [CategoryController::class, 'store']);
+                Route::get('/{id}', [CategoryController::class, 'show']);
+                Route::put('/{id}', [CategoryController::class, 'update']);
+                Route::post('/restore/{id}', [CategoryController::class, 'restore']);
             });
 
             Route::prefix('services')->group(function () {

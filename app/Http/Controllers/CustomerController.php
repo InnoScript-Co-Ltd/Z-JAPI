@@ -166,11 +166,12 @@ class CustomerController extends Controller
             $customer = Customer::findOrfail($id);
             $customer->delete($id);
             $this->adminLog('CUSTOMER_DELETED', $customer);
-
             DB::commit();
 
             return $this->success('Customer is deleted successfully', $customer);
         } catch (Exception $e) {
+            DB::rollback();
+
             return $this->internalServerError();
         }
     }

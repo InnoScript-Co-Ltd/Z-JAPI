@@ -6,5 +6,5 @@ enum GeneralStatusEnum: string
 {
     case PENDING = 'PENDING';
     case ACTIVE = 'ACTIVE';
-    case BLOCK = 'COMPLETE';
+    case DISABLE = 'DISABLE';
 }
