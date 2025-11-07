@@ -12,7 +12,8 @@ class ServiceController extends Controller
     public function index()
     {
         try {
-            $services = Service::searchQuery()
+            $services = Service::with(['category'])
+                ->searchQuery()
                 ->sortingQuery()
                 ->filterQuery()
                 ->filterDateQuery()

@@ -2,6 +2,8 @@
 
 namespace App\Http\Requests;
 
+use App\Enums\GeneralStatusEnum;
+use App\Models\Categories;
 use Illuminate\Foundation\Http\FormRequest;
 
 class ServiceStoreRequest extends FormRequest
@@ -21,7 +23,11 @@ class ServiceStoreRequest extends FormRequest
      */
     public function rules(): array
     {
+        $categories = Categories::where(['status' => GeneralStatusEnum::ACTIVE->value])->pluck('id')->toArray();
+        $categoriesId = implode(',', $categories);
+
         return [
+            'category_id' => "required | in:$categoriesId",
             'service_type' => 'required | unique:services,service_type',
             'fees' => 'required | numeric',
             'description' => 'nullable | string',

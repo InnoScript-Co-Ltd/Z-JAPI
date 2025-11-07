@@ -12,6 +12,11 @@ class Service extends Model
     use HasFactory, Notifiable, SoftDeletes;
 
     protected $fillable = [
-        'service_type', 'description', 'fees', 'status',
+        'service_type', 'category_id', 'description', 'fees', 'status',
     ];
+
+    public function category()
+    {
+        return $this->belongsTo(Categories::class);
+    }
 }

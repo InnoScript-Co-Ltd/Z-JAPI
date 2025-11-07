@@ -25,19 +25,19 @@ class CustomerUpdateRequest extends FormRequest
         $customerId = Customer::findOrFail(request('id'))->id;
 
         return [
-            'name' => 'required | string',
-            'photo' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'name' => 'nullable | string',
+            'photo' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:5120',
             'nrc' => "nullable | string | unique:customers,nrc,$customerId",
-            'nrc_front' => 'nullable |image|mimes:jpeg,png,jpg,gif|max:2048',
-            'nrc_back' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'nrc_front' => 'nullable |image|mimes:jpeg,png,jpg,gif|max:5120',
+            'nrc_back' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:5120',
             'passport' => "nullable | string | unique:customers,passport,$customerId",
-            'passport_photo' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'passport_photo' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:5120',
             'dob' => 'nullable | date',
             'phone' => "nullable | string | unique:customers,phone,$customerId",
             'email' => "nullable | unique:customers,email,$customerId",
             'contact_by' => 'nullable | string',
             'social_app' => 'nullable | string',
-            'social_link_qrcode' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'social_link_qrcode' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:5120',
             'remark' => 'nullable | string',
             'status' => 'nullable | string',
             'year_of_insurance' => 'nullable | string',
@@ -47,8 +47,8 @@ class CustomerUpdateRequest extends FormRequest
             'pink_card' => 'nullable | string',
             'employer' => 'nullable | string',
             'employer_type' => 'nullable | string',
-            'employer_photo' => 'nullable |image|mimes:jpeg,png,jpg,gif|max:2048',
-            'employer_household_photo' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'employer_photo' => 'nullable |image|mimes:jpeg,png,jpg,gif|max:5120',
+            'employer_household_photo' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:5120',
             'employer_company_data' => 'nullable | string',
         ];
     }

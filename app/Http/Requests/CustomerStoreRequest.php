@@ -23,18 +23,18 @@ class CustomerStoreRequest extends FormRequest
     {
         return [
             'name' => 'required | string',
-            'photo' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'photo' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:5120',
             'nrc' => 'nullable | string | unique:customers,nrc',
-            'nrc_front' => 'nullable |image|mimes:jpeg,png,jpg,gif|max:2048',
-            'nrc_back' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'nrc_front' => 'nullable |image|mimes:jpeg,png,jpg,gif|max:5120',
+            'nrc_back' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:5120',
             'passport' => 'nullable | string | unique:customers,passport',
-            'passport_photo' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'passport_photo' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:5120',
             'dob' => 'nullable | date',
             'phone' => 'nullable | string | unique:customers,phone',
             'email' => 'nullable | unique:customers,email',
             'contact_by' => 'nullable | string',
             'social_app' => 'nullable | string',
-            'social_link_qrcode' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'social_link_qrcode' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:5120',
             'remark' => 'nullable | string',
             'status' => 'nullable | string',
             'year_of_insurance' => 'nullable | string',
@@ -44,9 +44,10 @@ class CustomerStoreRequest extends FormRequest
             'pink_card' => 'nullable | string',
             'employer' => 'nullable | string',
             'employer_type' => 'nullable | string',
-            'employer_photo' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
-            'employer_household_photo' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'employer_photo' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:5120',
+            'employer_household_photo' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:5120',
             'employer_company_data' => 'nullable | string',
+            'status' => 'required | string',
         ];
     }
 }
