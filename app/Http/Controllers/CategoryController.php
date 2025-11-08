@@ -45,7 +45,7 @@ class CategoryController extends Controller
             $this->adminLog('CATEGORY_DELETED', $category);
             DB::commit();
 
-            return $this->success('Category is deleted successfully', $category);
+            return $this->success('Category is deleted successfully', null);
         } catch (Exception $e) {
             DB::rollback();
 
