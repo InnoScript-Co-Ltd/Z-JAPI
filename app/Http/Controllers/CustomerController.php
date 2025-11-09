@@ -5,10 +5,27 @@ namespace App\Http\Controllers;
 use App\Http\Requests\CustomerStoreRequest;
 use App\Http\Requests\CustomerUpdateRequest;
 use App\Models\Customer;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 
 class CustomerController extends Controller
 {
+    protected function generateFileName($prefix, $text, $file)
+    {
+        if (isset($file)) {
+            $textArray = explode(' ', strtoupper($text));
+            $fileName = 'Z&J_'.$prefix.'_'.implode('_', $textArray);
+            $now = Carbon::now('Asia/Bangkok')->format('Y_m_d_His').'_';
+            $fileRename = $now.$fileName.'.'.$file->getClientOriginalExtension();
+
+            $file->storeAs('uploads', $fileRename, 'public');
+
+            return $fileRename;
+        }
+
+        return null;
+    }
+
     public function index()
     {
         try {
@@ -28,47 +45,12 @@ class CustomerController extends Controller
     {
         $payload = collect($request->validated());
 
-        if (isset($payload['nrc_front'])) {
-            $nrcFrontPath = $payload['nrc_front']->store('images', 'public');
-            $nrcFrontImage = explode('/', $nrcFrontPath)[1];
-            $payload['nrc_front'] = $nrcFrontImage;
-        }
-
-        if (isset($payload['nrc_back'])) {
-            $nrcBackPath = $payload['nrc_back']->store('images', 'public');
-            $nrcBackImage = explode('/', $nrcBackPath)[1];
-            $payload['nrc_back'] = $nrcBackImage;
-        }
-
-        if (isset($payload['photo'])) {
-            $photoPath = $payload['photo']->store('images', 'public');
-            $photoImage = explode('/', $photoPath)[1];
-            $payload['photo'] = $photoImage;
-        }
-
-        if (isset($payload['passport_photo'])) {
-            $passportImagePath = $payload['passport_photo']->store('images', 'public');
-            $passportImageImage = explode('/', $passportImagePath)[1];
-            $payload['passport_photo'] = $passportImageImage;
-        }
-
-        if (isset($payload['social_link_qrcode'])) {
-            $socialLinkPath = $payload['social_link_qrcode']->store('images', 'public');
-            $socialLinkImage = explode('/', $socialLinkPath)[1];
-            $payload['social_link_qrcode'] = $socialLinkImage;
-        }
-
-        if (isset($payload['employer_photo'])) {
-            $employeePhotoPath = $payload['employer_photo']->store('images', 'public');
-            $employeePhotoImage = explode('/', $employeePhotoPath)[1];
-            $payload['employer_photo'] = $employeePhotoImage;
-        }
-
-        if (isset($payload['employer_household_photo'])) {
-            $employerHouseholdPhotoPath = $payload['employer_household_photo']->store('images', 'public');
-            $employerHouseholdPhoto = explode('/', $employerHouseholdPhotoPath)[1];
-            $payload['employer_household_photo'] = $employerHouseholdPhoto;
-        }
+        $payload['nrc_front'] = $this->generateFileName('NRC_FRONT', $payload['name'], $payload['nrc_front']);
+        $payload['nrc_back'] = $this->generateFileName('NRC_BACK', $payload['name'], $payload['nrc_back']);
+        $payload['photo'] = $this->generateFileName('PROFILE', $payload['name'], $payload['photo']);
+        $payload['passport_photo'] = $this->generateFileName('PASSPORT', $payload['name'], $payload['passport_photo']);
+        $payload['social_link_qrcode'] = $this->generateFileName('SOCIAL_MEDIA_APP_QRCODE', $payload['name'], $payload['social_link_qrcode']);
+        $payload['household_photo'] = $this->generateFileName('HOUSEHOLD', $payload['name'], $payload['household_photo']);
 
         DB::beginTransaction();
 
@@ -100,47 +82,12 @@ class CustomerController extends Controller
     {
         $payload = collect($request->validated());
 
-        if (isset($payload['nrc_front'])) {
-            $nrcFrontPath = $payload['nrc_front']->store('images', 'public');
-            $nrcFrontImage = explode('/', $nrcFrontPath)[1];
-            $payload['nrc_front'] = $nrcFrontImage;
-        }
-
-        if (isset($payload['nrc_back'])) {
-            $nrcBackPath = $payload['nrc_back']->store('images', 'public');
-            $nrcBackImage = explode('/', $nrcBackPath)[1];
-            $payload['nrc_back'] = $nrcBackImage;
-        }
-
-        if (isset($payload['photo'])) {
-            $photoPath = $payload['photo']->store('images', 'public');
-            $photoImage = explode('/', $photoPath)[1];
-            $payload['photo'] = $photoImage;
-        }
-
-        if (isset($payload['passport_photo'])) {
-            $passportImagePath = $payload['passport_photo']->store('images', 'public');
-            $passportImageImage = explode('/', $passportImagePath)[1];
-            $payload['passport_photo'] = $passportImageImage;
-        }
-
-        if (isset($payload['social_link_qrcode'])) {
-            $socialLinkPath = $payload['social_link_qrcode']->store('images', 'public');
-            $socialLinkImage = explode('/', $socialLinkPath)[1];
-            $payload['social_link_qrcode'] = $socialLinkImage;
-        }
-
-        if (isset($payload['employer_photo'])) {
-            $employeePhotoPath = $payload['employer_photo']->store('images', 'public');
-            $employeePhotoImage = explode('/', $employeePhotoPath)[1];
-            $payload['employer_photo'] = $employeePhotoImage;
-        }
-
-        if (isset($payload['employer_household_photo'])) {
-            $employerHouseholdPhotoPath = $payload['employer_household_photo']->store('images', 'public');
-            $employerHouseholdPhoto = explode('/', $employerHouseholdPhotoPath)[1];
-            $payload['employer_household_photo'] = $employerHouseholdPhoto;
-        }
+        $payload['nrc_front'] = $this->generateFileName('NRC_FRONT', $payload['name'], $payload['nrc_front']);
+        $payload['nrc_back'] = $this->generateFileName('NRC_BACK', $payload['name'], $payload['nrc_back']);
+        $payload['photo'] = $this->generateFileName('PROFILE', $payload['name'], $payload['photo']);
+        $payload['passport_photo'] = $this->generateFileName('PASSPORT', $payload['name'], $payload['passport_photo']);
+        $payload['social_link_qrcode'] = $this->generateFileName('SOCIAL_MEDIA_APP_QRCODE', $payload['name'], $payload['social_link_qrcode']);
+        $payload['household_photo'] = $this->generateFileName('HOUSEHOLD', $payload['name'], $payload['household_photo']);
 
         DB::beginTransaction();
 
