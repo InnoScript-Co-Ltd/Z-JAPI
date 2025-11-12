@@ -38,18 +38,9 @@ class CustomerUpdateRequest extends FormRequest
             'contact_by' => 'nullable | string',
             'social_app' => 'nullable | string',
             'social_link_qrcode' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:5120',
+            'household_photo' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:5120',
             'remark' => 'nullable | string',
             'status' => 'nullable | string',
-            'year_of_insurance' => 'nullable | string',
-            'fees' => 'nullable | numeric',
-            'deposit_amount' => 'nullable | numeric',
-            'balance' => 'nullable | numeric',
-            'pink_card' => 'nullable | string',
-            'employer' => 'nullable | string',
-            'employer_type' => 'nullable | string',
-            'employer_photo' => 'nullable |image|mimes:jpeg,png,jpg,gif|max:5120',
-            'employer_household_photo' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:5120',
-            'employer_company_data' => 'nullable | string',
         ];
     }
 }
