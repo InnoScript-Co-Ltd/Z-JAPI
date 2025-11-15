@@ -19,7 +19,7 @@ class Employer extends Model
     protected function casts(): array
     {
         return [
-            'company_documents' => 'array',
+            'company_documents' => 'json',
         ];
     }
 

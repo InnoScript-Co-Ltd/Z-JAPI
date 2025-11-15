@@ -6,6 +6,9 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CategoryServiceController;
 use App\Http\Controllers\CustomerController;
+use App\Http\Controllers\EmployerController;
+use App\Http\Controllers\FIleController;
+use App\Http\Controllers\OnboardingServiceController;
 use App\Http\Controllers\VisaServiceController;
 use Illuminate\Support\Facades\Route;
 
@@ -41,13 +44,6 @@ Route::prefix('v1')->group(function ($router) {
                 Route::post('/restore/{id}', [CategoryServiceController::class, 'restore']);
             });
 
-            Route::prefix('visa-services')->group(function () {
-                Route::get('/', [VisaServiceController::class, 'index']);
-                Route::post('/', [VisaServiceController::class, 'store']);
-                Route::get('/{id}', [VisaServiceController::class, 'show']);
-                Route::post('/{id}', [VisaServiceController::class, 'update']);
-            });
-
             Route::prefix('customer')->group(function () {
                 Route::get('/', [CustomerController::class, 'index']);
                 Route::post('/', [CustomerController::class, 'store']);
@@ -55,6 +51,31 @@ Route::prefix('v1')->group(function ($router) {
                 Route::post('/{id}', [CustomerController::class, 'update']);
                 Route::delete('/{id}', [CustomerController::class, 'destroy']);
                 Route::post('/restore/{id}', [CustomerController::class, 'restore']);
+            });
+
+            Route::prefix('employer')->group(function () {
+                Route::get('/', [EmployerController::class, 'index']);
+                Route::post('/', [EmployerController::class, 'store']);
+                Route::get('/{id}', [EmployerController::class, 'show']);
+                Route::post('/{id}', [EmployerController::class, 'update']);
+                Route::post('/restore/{id}', [EmployerController::class, 'restore']);
+            });
+
+            Route::prefix('download')->group(function () {
+                Route::get('/{name}', [FileController::class, 'download']);
+            });
+
+            Route::prefix('onboarding-service')->group(function () {
+                Route::get('/', [OnboardingServiceController::class, 'index']);
+                Route::post('/', [OnboardingServiceController::class, 'store']);
+                Route::get('/{id}', [OnboardingServiceController::class, 'show']);
+            });
+
+            Route::prefix('visa-services')->group(function () {
+                Route::get('/', [VisaServiceController::class, 'index']);
+                Route::post('/', [VisaServiceController::class, 'store']);
+                Route::get('/{id}', [VisaServiceController::class, 'show']);
+                Route::post('/{id}', [VisaServiceController::class, 'update']);
             });
 
             Route::prefix('activities')->group(function () {

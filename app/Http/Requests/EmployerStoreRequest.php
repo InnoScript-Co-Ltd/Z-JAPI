@@ -11,7 +11,7 @@ class EmployerStoreRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +22,13 @@ class EmployerStoreRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'full_name' => 'required | string',
+            'national_card_number' => 'required | unique:employers,national_card_number',
+            'household_photo' => 'nullable | image|mimes:jpeg,png,jpg,gif|max:5120',
+            'national_card_photo' => 'nullable | image|mimes:jpeg,png,jpg,gif|max:5120',
+            'employer_type' => 'required | string',
+            'company_documents' => 'nullable | array',
+            'company_documents.*' => 'file|mimes:jpeg,png,jpg,gif,pdf,doc,docx,xls,xlsx|max:5120',
         ];
     }
 }
