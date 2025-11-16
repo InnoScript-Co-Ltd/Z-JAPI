@@ -19,7 +19,7 @@ return new class extends Migration
             $table->string('national_card_photo')->nullable()->default(null);
             $table->string('household_photo')->nullable()->default(null);
             $table->string('employer_type');
-            $table->json('company_documents')->nullable()->default(null);
+            $table->string('company_documents')->nullable()->default(null);
             $table->auditColumns();
         });
     }
@@ -27,7 +27,7 @@ return new class extends Migration
     /**
      * Reverse the migrations.
      */
-    public function down(): void
+    public function down(): voidEM
     {
         Schema::dropIfExists('employers');
     }

@@ -52,15 +52,6 @@ class EmployerController extends Controller
             $payload['national_card_photo'] = $this->generateFileName('NATIONAL_ID_CARD', $payload['full_name'], $payload['national_card_photo']);
         }
 
-        if (isset($payload['company_documents'])) {
-
-            foreach ($payload['company_documents'] as $index => $payloadFile) {
-                $fileNames[] = $index.'_'.$payload['company_documents'] = $this->generateFileName('EMPLOYER_COMPANY_FILE', $payload['full_name'], $payloadFile);
-            }
-
-            $payload['company_documents'] = $fileNames;
-        }
-
         DB::beginTransaction();
 
         try {
@@ -99,73 +90,15 @@ class EmployerController extends Controller
             $payload['national_card_photo'] = $this->generateFileName('NATIONAL_ID_CARD', $payload['full_name'], $payload['national_card_photo']);
         }
 
-        if (isset($payload['update_documents'])) {
-            $payload['update_documents'] = explode(',', $payload['update_documents']);
-        }
-
-        if (isset($payload['company_documents'])) {
-
-            foreach ($payload['company_documents'] as $index => $payloadFile) {
-                $fileNames[] = $payload['company_documents'] = $this->generateFileName('EMPLOYER_COMPANY_FILE', $payload['full_name'], $payloadFile);
-            }
-
-            $payload['company_documents'] = $fileNames;
-        }
-
-        if (isset($payload['company_documents']) && isset($payload['update_documents'])) {
-            $payload['company_documents'] = array_merge($payload['company_documents'], $payload['update_documents']);
-        }
-
         DB::beginTransaction();
 
         try {
             $employer = Employer::findOrFail($id);
-
-            if (! isset($payload['company_documents']) && isset($payload['update_documents'])) {
-                $payload['company_documents'] = $payload['update_documents'];
-            }
-
             $employer->update($payload->toArray());
             $this->adminLog('EMPLOYER_UPDATE', $payload);
             DB::commit();
 
             return $this->success('Employer is retrived successfully', $employer);
-        } catch (Exception $e) {
-            DB::rollBack();
-
-            return $this->internalServerError();
-        }
-    }
-
-    public function destroy($id)
-    {
-        DB::beginTransaction();
-
-        try {
-            $customer = Customer::findOrfail($id);
-            $customer->delete($id);
-            $this->adminLog('EMPLOYER_DELETED', $customer);
-            DB::commit();
-
-            return $this->success('Customer is deleted successfully', $customer);
-        } catch (Exception $e) {
-            DB::rollback();
-
-            return $this->internalServerError();
-        }
-    }
-
-    public function restore($id)
-    {
-        DB::beginTransaction();
-
-        try {
-            $customer = Customer::onlyTrashed()->findOrfail($id);
-            $customer->restore();
-            $this->adminLog('EMPLOYER_RESTORED', $customer);
-            DB::commit();
-
-            return $this->success('Customer is restored successfully', $customer);
         } catch (Exception $e) {
             DB::rollBack();
 

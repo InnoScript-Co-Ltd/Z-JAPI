@@ -16,13 +16,6 @@ class Employer extends Model
         'code', 'full_name', 'national_card_number', 'household_photo', 'national_card_photo', 'employer_type', 'company_documents',
     ];
 
-    protected function casts(): array
-    {
-        return [
-            'company_documents' => 'json',
-        ];
-    }
-
     protected static function boot()
     {
         parent::boot();
